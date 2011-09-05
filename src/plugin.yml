@@ -1,0 +1,13 @@
+name: AznBans
+main: de.bananaco.aznbans.AznBans
+version: 1.0
+commands:
+  kick:
+    description: Kick a player
+    usage: /kick playername reason
+  ban:
+    description: Ban a player
+    usage: /ban playername reason
+  unban:
+    description: Unban a player
+    usage: /ban playername
