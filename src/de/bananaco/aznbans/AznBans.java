@@ -172,8 +172,8 @@ public class AznBans extends JavaPlugin {
 		// Loads of people say it's my eyes.
 		c.load();
 		// Glass of port?
-		c.setProperty("query-port", c.getInt("query-port",495));
-		this.queryPort = c.getInt("query-port", 495);
+		c.setProperty("query-port", c.getInt("query-port",4950));
+		this.queryPort = c.getInt("query-port", 4950);
 		// Where are you localhosting this party from anyway?
 		c.setProperty("query-ip", c.getString("query-ip","ANY"));
 		this.queryIp = c.getString("query-ip","ANY");

@@ -4,7 +4,7 @@
     <groupId>de.bananaco</groupId>
     <artifactId>AznBans</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <name>AznBans</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
