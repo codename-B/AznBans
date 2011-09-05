@@ -1,6 +1,6 @@
 name: AznBans
 main: de.bananaco.aznbans.AznBans
-version: 1.0
+version: ${project.version}
 commands:
   kick:
     description: Kick a player
