@@ -23,12 +23,53 @@ public class AznBans extends JavaPlugin {
 	private QueryServer qs;
 	private static BanHandler bh;
 	
+	@Override
+	public void onDisable() {
+		try {
+		qs.getListener().close();
+		qs.interrupt();
+		} catch (Exception e) {
+			System.err.println("[AznBans] Error disabling plugin.");
+		}
+		
+		System.out.println("[AznBans] Disabled.");
+	}
+	
+	@Override
+	public void onEnable() {
+		setupConfig();
+		try {
+		getServer().getPluginManager().addPermission(new Permission("azbans.kick",PermissionDefault.OP));
+		getServer().getPluginManager().addPermission(new Permission("azbans.ban",PermissionDefault.OP));
+		getServer().getPluginManager().addPermission(new Permission("azbans.bypass",PermissionDefault.OP));
+		} catch (Exception e) {
+			System.err.println("[AznBans] Permissions error. Blame Dinnerbone.");
+		}
+		bh = new BanHandler();
+		qs = new QueryServer(queryIp, queryPort);
+		try {
+
+		qs.startListener();
+
+		qs.start();
+
+		new SyncBans(c).start();
+
+		} catch(Exception e) {
+		System.err.println("[AznBans] Socket error!");
+		}
+		getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, new BanListener(), Priority.Normal, this);
+		System.out.println("[AznBans] Enabled.");
+	}
+	
 	public static BanHandler getBanHandler() {
 		return bh;
 	}
+	
 	public void aznMessage(CommandSender sender, String message) {
 		sender.sendMessage(ChatColor.AQUA + "[AznBans] " + ChatColor.GREEN + message);
 	}
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(args.length==0)
@@ -46,8 +87,6 @@ public class AznBans extends JavaPlugin {
 					return true;
 				}
 			}
-			
-			
 			String playername;
 				playername = args[0];
 				
@@ -57,7 +96,6 @@ public class AznBans extends JavaPlugin {
 					aznMessage(sender, playername+" was unbanned");
 					return true;
 				}
-				
 			if(args.length==1) {
 				bh.ban(playername);
 				aznMessage(sender, playername + " was banned");
@@ -127,45 +165,7 @@ public class AznBans extends JavaPlugin {
 		}
 		return false;
 	}
-
-	@Override
-	public void onDisable() {
-		try {
-		qs.getListener().close();
-		qs.interrupt();
-		} catch (Exception e) {
-			System.err.println("[AznBans] Error disabling plugin.");
-		}
-		
-		System.out.println("[AznBans] Disabled.");
-	}
 	
-	@Override
-	public void onEnable() {
-		setupConfig();
-		try {
-		getServer().getPluginManager().addPermission(new Permission("azbans.kick",PermissionDefault.OP));
-		getServer().getPluginManager().addPermission(new Permission("azbans.ban",PermissionDefault.OP));
-		getServer().getPluginManager().addPermission(new Permission("azbans.bypass",PermissionDefault.OP));
-		} catch (Exception e) {
-			System.err.println("[AznBans] Permissions error. Blame Dinnerbone.");
-		}
-		bh = new BanHandler();
-		qs = new QueryServer(queryIp, queryPort);
-		try {
-
-		qs.startListener();
-
-		qs.start();
-
-		new SyncBans(c).start();
-
-		} catch(Exception e) {
-		System.err.println("[AznBans] Socket error!");
-		}
-		getServer().getPluginManager().registerEvent(Event.Type.PLAYER_LOGIN, new BanListener(), Priority.Normal, this);
-		System.out.println("[AznBans] Enabled.");
-	}
 	public void setupConfig() {
 		// What would you say my defining characteristic is?
 		this.c = getConfiguration();

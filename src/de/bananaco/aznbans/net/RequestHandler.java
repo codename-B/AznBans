@@ -27,7 +27,7 @@ public final class RequestHandler extends Thread {
 			String line = reader.readLine();
 			// Read the request and handle it.
 			this.handleRequest(socket, line);
-
+			System.out.println("[AznBans] "+socket.getInetAddress().toString().replace("/", "") + " requested your banlist!");
 			// Finally close the socket.
 			socket.close();
 		} catch (IOException ignored) {

@@ -39,7 +39,7 @@ public class SyncBans extends Thread {
 	}
 	
 	public static String performQuery(String host, int port) throws Exception {
-	System.out.println("**** Checking bans on " + host + ":" + port);
+	System.out.println("[AznBans] Checking bans on " + host + ":" + port);
 	String query = "QUERY";
 	Socket socket = new Socket(host, port);
 
